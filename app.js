@@ -9,7 +9,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying, lastRoll, count; //gamePlaying is a state variable, to check if the game is being played or it finished.
+var scores, roundScore, activePlayer, lastRoll, count,winningScore, gamePlaying; //gamePlaying is a state variable, to check if the game is being played or it finished.
 init();
 
 // Event Listener
@@ -48,7 +48,7 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
       scores[activePlayer];
       nextPlayer();
     }
-    
+
     //4.display the result
     var diceDOM = document.querySelector(".dice");
     diceDOM.style.display = "block";
@@ -66,7 +66,7 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
       scores[activePlayer];
 
     // check if player won the game
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= winningScore) {
       document.querySelector("#name-" + activePlayer).textContent = "Winner!";
       document.querySelector(".dice").style.display = "none";
       document
@@ -93,6 +93,7 @@ function init() {
   roundScore = 0;
   activePlayer = 0;
   gamePlaying = true;
+  winningScore = prompt('Please enter the winning score fot this game');
   document.querySelector(".dice").style.display = "none";
   document.getElementById("score-0").textContent = "0";
   document.getElementById("score-1").textContent = "0";

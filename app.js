@@ -9,7 +9,13 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, lastRoll, count,winningScore, gamePlaying; //gamePlaying is a state variable, to check if the game is being played or it finished.
+var scores,
+  roundScore,
+  activePlayer,
+  lastRoll,
+  count,
+  winningScore,
+  gamePlaying; //gamePlaying is a state variable, to check if the game is being played or it finished.
 init();
 
 // Event Listener
@@ -28,9 +34,9 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
         "#current-" + activePlayer
       ).textContent = roundScore;
     } else {
-     nextPlayer();
+      nextPlayer();
     }
-    
+
     // check if roll 6 twice
     if (dice === 6) {
       lastRoll = 6;
@@ -45,13 +51,16 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
       console.log("rolled 2 twice");
       scores[activePlayer] = 0;
       document.getElementById("score-" + activePlayer).textContent =
-      scores[activePlayer];
+        scores[activePlayer];
       nextPlayer();
     }
 
     //4.display the result
     var diceDOM = document.querySelector(".dice");
+    var diceDOM2 = document.querySelector(".dice2");
     diceDOM.style.display = "block";
+    diceDOM2.style.display = "block";
+
     diceDOM.src = "dice-" + dice + ".png";
   }
 });
@@ -93,8 +102,9 @@ function init() {
   roundScore = 0;
   activePlayer = 0;
   gamePlaying = true;
-  winningScore = prompt('Please enter the winning score fot this game');
+  winningScore = prompt("Please enter the winning score fot this game");
   document.querySelector(".dice").style.display = "none";
+  document.querySelector(".dice2").style.display = "none";
   document.getElementById("score-0").textContent = "0";
   document.getElementById("score-1").textContent = "0";
   document.getElementById("current-0").textContent = "0";

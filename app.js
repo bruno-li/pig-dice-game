@@ -14,7 +14,7 @@ var scores,
   activePlayer,
   lastRoll,
   count,
-  winningScore,
+  finalScore,
   gamePlaying; //gamePlaying is a state variable, to check if the game is being played or it finished.
 init();
 
@@ -24,6 +24,7 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
   if (gamePlaying) {
     // 1. Random Number
     var dice = Math.floor(Math.random() * 6) + 1;
+    var dice2 = Math.floor(Math.random() * 6) + 1;
     var thisRoll = dice;
 
     //2. Update the round score IF the rolled number was not a 1
@@ -34,6 +35,10 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
         "#current-" + activePlayer
       ).textContent = roundScore;
     } else {
+      nextPlayer();
+    }
+
+    if (dice2 === 1) {
       nextPlayer();
     }
 
@@ -48,10 +53,11 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 
     //3. if roll 6 twice, lose total score and next player turn
     if (thisRoll === 6 && lastRoll === 6 && count === 2) {
-      console.log("rolled 2 twice");
       scores[activePlayer] = 0;
+
       document.getElementById("score-" + activePlayer).textContent =
         scores[activePlayer];
+
       nextPlayer();
     }
 
@@ -62,6 +68,7 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     diceDOM2.style.display = "block";
 
     diceDOM.src = "dice-" + dice + ".png";
+    diceDOM2.src = "dice-" + dice2 + ".png";
   }
 });
 
@@ -69,15 +76,31 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
   if (gamePlaying) {
     //Add Current score to Global score
     scores[activePlayer] += roundScore;
+    var winningScore;
+    // set the final score for winning the game
+    finalScore = document.querySelector('.final-score').value;
+
+
+    // undefined, 0, null or "" are coerced to false
+    // Anything else is coerced to true
+    if(finalScore){
+      winningScore = finalScore;
+    } else {
+      winningScore = 100;
+    }
 
     //update the UI with the player score
     document.getElementById("score-" + activePlayer).textContent =
       scores[activePlayer];
 
+
+
+
     // check if player won the game
     if (scores[activePlayer] >= winningScore) {
       document.querySelector("#name-" + activePlayer).textContent = "Winner!";
       document.querySelector(".dice").style.display = "none";
+      document.querySelector(".dice2").style.display = "none";
       document
         .querySelector(".player-" + activePlayer + "-panel")
         .classList.add("winner");
@@ -102,7 +125,6 @@ function init() {
   roundScore = 0;
   activePlayer = 0;
   gamePlaying = true;
-  winningScore = prompt("Please enter the winning score fot this game");
   document.querySelector(".dice").style.display = "none";
   document.querySelector(".dice2").style.display = "none";
   document.getElementById("score-0").textContent = "0";
@@ -130,4 +152,5 @@ function nextPlayer() {
   document.querySelector(".player-1-panel").classList.toggle("active");
   // hide the dice when switching players
   document.querySelector(".dice").style.display = "none";
+  document.querySelector(".dice2").style.display = "none";
 }

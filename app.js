@@ -37,11 +37,9 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     } else {
       nextPlayer();
     }
-
     if (dice2 === 1) {
       nextPlayer();
     }
-
     // check if roll 6 twice
     if (dice === 6) {
       lastRoll = 6;
